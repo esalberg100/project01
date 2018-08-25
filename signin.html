@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- My CSS -->
+    <link rel="stylesheet" href="main.css">
+    <link href = "signin.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+    <!-- Optional JavaScript -->
+    <!-- Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
+    
+    <!-- Firebase App is always required and must be first -->
+    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
+
+    <!-- Add additional services that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-functions.js"></script>
+    
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css" />
+    
+        <script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCZpWm2TIu-bvj8FhElh0em0S2-fx5Zo64",
+    authDomain: "newsocialnetwork-ce19e.firebaseapp.com",
+    databaseURL: "https://newsocialnetwork-ce19e.firebaseio.com",
+    projectId: "newsocialnetwork-ce19e",
+    storageBucket: "newsocialnetwork-ce19e.appspot.com",
+    messagingSenderId: "373556241499"
+  };
+  firebase.initializeApp(config);   
+</script>
+<script src="script.js"></script>
+</head> 
+      
+    
+<!--body>
+    
+    
+    <div class="form-signin">
+        <div id="signin_buttons">
+            <button onclick="document.getElementById('signin_buttons').style.display = 'none';document.getElementById('signin_email').style.display = 'block';" class="btn btn-lg btn-primary btn-block"><i class="fas fa-envelope"></i> &nbsp;Sign up with Email</button>
+            <button onclick="logInGoogle()" class="btn btn-lg btn-primary btn-block" type="submit"><i class="fab fa-google"></i>  &nbsp;Sign up with Google</button>
+        </div>
+    <div id="signin_email">
+      <div class="text-center mb-4">
+        <span class="oi oi-person" style="font-size:2rem"></span>
+        <h1 class="h3 mb-3 font-weight-normal">Sign Up</h1>
+      </div>
+        
+    <div class="form-label-group">
+        <input type="text" id="userName" class="form-control" placeholder="Username" required autofocus="">
+        <label for="userName">Username</label>
+      </div>
+
+      <div class="form-label-group">
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required>
+        <label for="inputEmail">Email address</label>
+      </div>
+
+      <div class="form-label-group">
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <label for="inputPassword">Password</label>
+      </div>
+
+      <button onclick="createUser()" class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+      <div class="mt-5 mb-3 text-muted text-center" onclick="location.href='login.html';" style="cursor:pointer;">I already have an account</div>
+    </div>
+</div>
+  
+
+</body-->
+
+    
+<body>
+    <!-- The surrounding HTML is left untouched by FirebaseUI.
+     Your app may use that space for branding, controls and other customizations.-->
+    <div id="firebaseui-auth-container"></div>
+    
+    <script>
+        // Initialize the FirebaseUI Widget using Firebase.
+        var ui = new firebaseui.auth.AuthUI(firebase.auth());
+        
+        var uiConfig = {
+      callbacks: {
+        signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+          // User successfully signed in.
+          // Return type determines whether we continue the redirect automatically
+          // or whether we leave that to developer to handle.
+          return true;
+        },
+        uiShown: function() {
+          // The widget is rendered.
+          // Hide the loader.
+          //document.getElementById('loader').style.display = 'none';
+        }
+      },
+      // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
+      signInFlow: 'popup',
+      signInSuccessUrl: '/index.html',
+      signInOptions: [
+        // Leave the lines as is for the providers you want to offer your users.
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        //firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+        //firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+        //firebase.auth.GithubAuthProvider.PROVIDER_ID,
+        firebase.auth.EmailAuthProvider.PROVIDER_ID,
+        firebase.auth.PhoneAuthProvider.PROVIDER_ID
+      ],
+      // Terms of service url.
+      tosUrl: 'http://trofapp.com/tc/',
+      // Privacy policy url.
+      privacyPolicyUrl: 'http://trofapp.com/privacypolicy/'
+    };
+        
+    // The start method will wait until the DOM is loaded.
+        ui.start('#firebaseui-auth-container', uiConfig);        
+        
+    </script>
+    
+</body>
