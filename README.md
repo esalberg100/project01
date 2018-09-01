@@ -6,7 +6,7 @@
 
 Recommended OS: **Mac OS Mojave**, **Windows 10** or **Linux Ubuntu 18.04 LTS**
 
-## 1. Install Firebase
+## Install Firebase
 
 For `firebase init` you will need to follow the CLI prompts to initialize the Trof project. The project ID is `newsocialnetwork-ce19e`
 
@@ -16,20 +16,6 @@ $ firebase init    # Generate a firebase.json (REQUIRED) this is where you will 
 ```
 
 Generate the files as recommended with the default names.
-
-## 2. Set up GitHub repository
-
-## 3. Setup a localhost server
-
-Start a development server by running `$ firebase serve` in the CLI.
-
-The server will run on localhost:5000.
-
-## 4. Deploy
-
-Ensure that all files are saved. Commit all files to a staging branch in GitHub. It is not recommended to commit to the master branch.
-
-In the CLI, run `firebase deploy` to build the current project. This may take a minute.
 
 ## Development
 
@@ -43,9 +29,21 @@ Navigate to the root directory of the project using the change directory command
 
 2. `firebase serve`
 
+A local server will be created and will serve hosting files at http://localhost:5000.
+
 In your text editor/code editor/IDE of choice, open the `public` folder, which will be within the root `project01` folder. This will display all files within that folder. Alternatively, you can just open a single file in the `public` folder.
 
+To view your changes, simply save the file you have edited, and refresh the localhost server in the browser.
+
 Use your preferred Git version control software such as **Sourcetree** to pull, push and commit your files to Github. Consult the Sourcetree official documentation for more information and how to go about this: https://confluence.atlassian.com/get-started-with-sourcetree. Note that Sourcetree is currently not supported for Linux operating systems.
+
+## Deploy
+
+Save all files, and push & commit all changes in Github. Be sure to fully comment your updates. 
+
+To deploy, terminate the localhost server process and run `firebase deploy` in the CLI (Command Line Interface). The current project will build, which may take a couple minutes.
+
+Your changes will be live at https://beta.trofapp.com.
 
 
 ### Disclaimer
