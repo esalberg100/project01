@@ -4,7 +4,7 @@
 
 ### Setting up your development environment
 
-Recommended OS: **Mac OS High Sierra** or **Linux Ubuntu 18.04 LTS**
+Recommended OS: **Mac OS Mojave**, **Windows 10** or **Linux Ubuntu 18.04 LTS**
 
 ## 1. Install Firebase
 
