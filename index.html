@@ -1,26 +1,23 @@
 <!doctype html>
 <html lang="en">
 <head>
+
      <!-- Add to homescreen for Safari on iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="TNSN">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
     <!-- My CSS -->
     <link rel="stylesheet" href="style.css">
 
-    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
-    
-    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
-    
     <!-- Firebase App is always required and must be first -->
     <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
 
@@ -30,18 +27,21 @@
     <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-messaging.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-functions.js"></script>
-    
+
     <!-- Optional JavaScript -->
     <!-- Popper.js, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/chrono-node@1.3.5/chrono.min.js"></script>
-    
-    
-    
+
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css" />
+
+
+
     <script>
   // Initialize Firebase
   var config = {
@@ -58,40 +58,13 @@
 
 <body>
 
-    
+
 <script>
     $( document ).ready(function() {
         $( "#nav" ).load( "/nav.html" );
         });
-</script>  
-<span id="nav"></span>
-    
-<script src="script.js"></script>
-    
-<script>
- firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-      var user = firebase.auth().currentUser;
-      var name, email, photoUrl, uid, emailVerified;
-      name = user.displayName;
-      email = user.email;
-      emailVerified = user.emailVerified;
-      document.getElementById('loggedInAs').innerHTML = name;
-      uid = user.uid;
-      
-      var usersRef = db.collection("users");
-      var docRef = usersRef.doc(name);
-      
-      if (!emailVerified) {
-          document.getElementById("verifyEmailAlert").style.display = "block";
-      }
-      
-  } else {
-    window.location.assign("signin.html");
-  }
-});
-    
 </script>
+<span id="nav"></span>
 
 
 <div id="verifyEmailAlert" style="display:none;" class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -100,14 +73,14 @@
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-    
-<div class="form-group container">
+
+<div class="form-group container" style="display:none;">
     <h4 style="text-align: center;">Create new meetup</h4><br>
     <label for="when">Date and time</label>
     <input class="form-control form-control-lg" id="when" type="text" placeholder="Tomorrow at 5pm">
     <label for="autocomplete">Location</label>
     <input class="form-control form-control-lg" type="text" id="autocomplete" placeholder="Wild Goose Meeting House">
-    
+
     <script>
     function initAutocomplete() {
            new google.maps.places.Autocomplete(
@@ -118,21 +91,104 @@
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZpWm2TIu-bvj8FhElh0em0S2-fx5Zo64&libraries=places&callback=initAutocomplete">
     </script>
-    
-    <button type="button" style="margin-top: 1em;margin-bottom: 1em;" id="postButton" class="btn btn-primary btn-lg btn-block" >Create</button>
-    
-    <div id="postsLists"></div>
 
-    
+    <button type="button" style="margin-top: 1em;margin-bottom: 1em;" id="postButton" class="btn btn-primary btn-lg btn-block" >Create</button>
+
     <div class="spinner" id="loading" style="display:block;">
         <div class="bounce1"></div>
         <div class="bounce2"></div>
         <div class="bounce3"></div>
     </div>
+
 </div>
 
+<div class="container-fluid">
+  <div class="card-deck" id="postsLists">
+  </div>
+</div>
 
-    
+<!-- Modal -->
+<div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="postModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="postModalBody">
+          <div id="detailPostElement">
+            <h5 id="detailHeader">More details goes here</h5>
+              <div class="spinner" id="detailLoading">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+              </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="deleteUser();">Join</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Login Modal -->
+<div class="modal" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">Sign in</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="loginModalBody">
+
+              <div class="form-label-group">
+                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" autocomplete="email" required="" autofocus="">
+                <label for="inputEmail">Email address</label>
+                  <small id="emailLoginHelpBlock" style="display:none;" class="form-text text-muted color-danger">
+                </small>
+              </div>
+
+
+              <div class="form-label-group">
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+                <label for="inputPassword">Password</label>
+                  <small id="passwordLoginHelpBlock" style="display:none;" class="form-text text-muted">
+                </small>
+                <div class="mt-3 mb-3 text-muted text-left" onclick="resetPassword()" style="cursor:pointer;">Forgot password?</div>
+              </div>
+
+
+              <button onclick="logIn()" id="loginButton" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+
+            <script>
+            var inputPw = document.getElementById("inputPassword");
+            inputPw.addEventListener("keydown", function(event) {
+              if (event.keyCode === 13) {
+                logIn();
+              }
+            });
+          </script>
+            <hr class="hr-text" data-content="OR">
+            <button type="button" id="loginGoogleButton" onclick="logInGoogle()" class="btn btn-outline-primary btn-lg btn-block" ><i class="fab fa-google"></i> &nbsp; Sign in with Google</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--footer class="footer">
+      <div class="container">
+        <span class="text-muted">Privacy Policy</span>
+        <span class="text-muted">Terms and Conditions</span>
+        <span class="text-muted">©2018 Trof LLC</span>
+      </div>
+</footer-->
+
 </body>
 
 </html>

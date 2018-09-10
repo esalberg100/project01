@@ -3,6 +3,11 @@
   --input-padding-y: .75rem;
 }
 
+
+* {
+    font-family: font-family: -apple-system, BlinkMacSystemFont, sans-serif!important;
+}
+
 html,
 body {
   height: 100%;
@@ -20,7 +25,7 @@ body {
   justify-content: center;
   padding-top: 40px;
   padding-bottom: 40px;
-  background-color: black;
+  background-color: white;
 }
 
 .form-signin {
