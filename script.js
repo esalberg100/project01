@@ -19,6 +19,20 @@ function createUser() {
     });
 
     sendEmailVerification();
+	
+	db.collection("users").add({
+		profileID: user.uid,
+		firstName: document.getElementById('inputFirstName'),
+		lastName: document.getElementById('inputLastName'),
+		interests: null,
+		favRestaurant: null,
+		bio: null,
+		dateOfBirth: document.getElementById('inputDOB'),
+		homeCity: null
+	  }).then(function(docRef) {}
+	  ).catch(function(error) {
+		console.log("ERROR: " + error);
+	  })
 
 }
 
