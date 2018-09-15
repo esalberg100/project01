@@ -222,6 +222,24 @@ var user = firebase.auth().currentUser;
 }
 
 }
+
+if (window.location.pathname == '/meetups.html') {
+	console.log("it's the meetups page");
+var user = firebase.auth().currentUser;
+var docRef = db.collection("users").doc(user.uid);
+console.log(user.uid);
+
+docRef.get().then(function(doc) {
+    if (doc.exists) {
+        console.log("Document data:", doc.data());
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+    }
+}).catch(function(error) {
+    console.log("Error getting document:", error);
+})
+}
 }
 
 
