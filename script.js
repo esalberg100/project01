@@ -8,18 +8,24 @@ const firestore = firebase.firestore();
 const settings = {/* your settings... */ timestampsInSnapshots: true};
 firestore.settings(settings);
 
-function createUser() {
-    firebase.auth().createUserWithEmailAndPassword(document.getElementById('inputEmail').value, document.getElementById('inputPassword').value).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // ...
-    console.log (errorCode);
-     //do error stuff
-    });
+function checkUser() {
+  if ($('#inputPassword1').val() != $('#inputPassword2').val()) {
+    $('#confirmPWError').val("Password must be equal to Confirm Password"));
+    $('#confirmPWError').show();
+  }
+}
 
-    sendEmailVerification();
+function createUser () {
+  firebase.auth().createUserWithEmailAndPassword(document.getElementById('inputEmail').value, document.getElementById('inputPassword').value).catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // ...
+  console.log (errorCode);
+   //do error stuff
+  });
 
+  sendEmailVerification();
 }
 
 
@@ -122,8 +128,19 @@ function logIn () {
   }
   console.log(error);
 });
-  $('#loginModal').modal('hide');
+
 }
+
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+    console.log("signed in");
+    $('#loginModal').modal('hide');
+  } else {
+    // No user is signed in.
+  }
+});
+
 
 getLocation();
 function getLocation() {

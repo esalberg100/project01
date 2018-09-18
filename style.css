@@ -60,6 +60,22 @@ button:focus {
     margin-bottom:2rem;
 }
 
+.modal-title {
+  display: inline-block;
+  font-weight: 800;
+  opacity: 0.4;
+}
+
+.modal-title:hover {
+  color: var(--primary)!important;
+}
+
+.modal-title-active {
+  color: var(--primary)!important;
+  border-bottom: 4px solid var(--primary)!important;
+  opacity: 1.0 !important;
+}
+
 #postInput {
     resize: none;
 }
