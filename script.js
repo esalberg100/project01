@@ -8,12 +8,40 @@ const firestore = firebase.firestore();
 const settings = {/* your settings... */ timestampsInSnapshots: true};
 firestore.settings(settings);
 
+<<<<<<< .merge_file_hTUxNO
 function checkUser() {
   if ($('#inputPassword1').val() != $('#inputPassword2').val()) {
     $('#confirmPWError').val("Password must be equal to Confirm Password"));
     $('#confirmPWError').show();
   }
 }
+=======
+function createUser() {
+    firebase.auth().createUserWithEmailAndPassword(document.getElementById('inputEmail').value, document.getElementById('inputPassword').value).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // ...
+    console.log (errorCode);
+     //do error stuff
+    });
+
+    sendEmailVerification();
+	
+	db.collection("users").add({
+		profileID: user.uid,
+		firstName: document.getElementById('inputFirstName'),
+		lastName: document.getElementById('inputLastName'),
+		interests: null,
+		favRestaurant: null,
+		bio: null,
+		dateOfBirth: document.getElementById('inputDOB'),
+		homeCity: null
+	  }).then(function(docRef) {}
+	  ).catch(function(error) {
+		console.log("ERROR: " + error);
+	  })
+>>>>>>> .merge_file_dRfNx8
 
 function createUser () {
   firebase.auth().createUserWithEmailAndPassword(document.getElementById('inputEmail').value, document.getElementById('inputPassword').value).catch(function(error) {
@@ -224,6 +252,24 @@ var user = firebase.auth().currentUser;
   })
 }
 
+}
+
+if (window.location.pathname == '/meetups.html') {
+	console.log("it's the meetups page");
+var user = firebase.auth().currentUser;
+var docRef = db.collection("users").doc(user.uid);
+console.log(user.uid);
+
+docRef.get().then(function(doc) {
+    if (doc.exists) {
+        console.log("Document data:", doc.data());
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+    }
+}).catch(function(error) {
+    console.log("Error getting document:", error);
+})
 }
 }
 
